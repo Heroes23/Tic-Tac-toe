@@ -1,0 +1,67 @@
+# use a simplier model to interpret the game since the data is dependent on teh model and vice-versa. 
+# Goal: Build a standard working NN. Will use a multi-classifer model b/c of more than two classes; W, L, D.
+# these algorithms are trained to learn patterns from structured labeled data.
+# can modify our multiclass classification as a problem of multi-classifier model. 
+# Want to read reinforcement learning information, then compare the standard multi-classifier model with a RL model. 
+# use sample.py to generate data. 
+# Want to pick a better training data/adjust it. 
+# all the data in train and test are equal, want to randomize the process b/w splitting the two. 
+
+#### Code listed below w/comments. ####
+
+### One vs. One Method ### 
+# generate a training dataset (from sample.py). 
+# use a one vs. one method: W vs. L, W vs. D, L vs. D. 
+
+## Multiclass Classification with ‘n’ classes ## 
+# sklearn library’s multiclass module.
+# from sklearn.multiclass 
+import OneVsOneClassifier
+svc_model=SVC()
+ovo_model=OneVsOneClassifier(svc_model)
+ovo_model.fit(x,y)
+
+## Decision Tree ## 
+# The decision of how to split depends on entropy and information gained. Entropy refers to the randomness in the dataset, hence, 
+# the decision tree tries to make a split which will minimize the value of entropy of the data.
+# The initial nodes in a decision tree are the root nodes, and all the nodes, where splits are made, are called decision nodes. 
+# The final nodes at the end of the tree are the ‘leaf nodes’, which provide the prediction.
+x, y = make_classification(n_samples=200, n_features=?, n_informative=?, n_redundant=?, n_classes=3)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=?, random_state=?)
+# from sklearn.tree import DecisionTreeClassifier
+model = DecisionTreeClassifier()
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+
+# import the model from sklearn
+import DecisionTreeClassifier
+model = DecisionTreeClassifier()
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+
+# Confusion Matrix # 
+# generate a confusion matrix just like the binary classification to check the performance.
+import ConfusionMatrixDisplay, confusion_matrix
+fig, ax = plt.subplots(figsize=(?, ?))
+cmp = ConfusionMatrixDisplay(confusion_matrix(y_test, y_pred),display_labels=["class_1", "class_2", "class_3"],)
+cmp.plot(ax=ax)
+plt.show();
+
+# Classification Report 
+import classification_report
+print(classification_report(y_test, y_pred))
+
+
+### One vs. All/Rest Method ### 
+
+# logistic regression for multi-class classification using built-in one-vs-rest
+from sklearn.datasets import make_classification
+from sklearn.linear_model import LogisticRegression
+# define dataset
+X, y = make_classification(n_samples=200, n_features=?, n_informative=?, n_redundant=?, n_classes=3, random_state=?)
+# define model
+model = LogisticRegression(multi_class='ovr')
+# fit model
+model.fit(X, y)
+# make predictions
+yhat = model.predict(X)
